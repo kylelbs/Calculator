@@ -1,0 +1,20 @@
+#calculator {
+    background-color: grey;
+    width: 500px;
+}
+
+#buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#buttons > * {
+    flex-basis: 33.333333%;
+    padding: 3px;
+    margin: 0px;
+}
+
+#display {
+    background-color: white;
+    width: 100%;
+}
