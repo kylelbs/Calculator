@@ -7,4 +7,11 @@ let divFunction = (a, b) => a / b;
 
 let operate = (operator, a, b) => operator(a, b);
 
-console.log(operate(addFunction, 2, 9));
+buttons = document.querySelectorAll("button");
+display = document.querySelector('#display');
+
+buttons.forEach(button => {
+    button.addEventListener('click', e => {
+        display.innerText += e.target.innerText;
+    });
+});
