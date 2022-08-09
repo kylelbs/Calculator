@@ -31,10 +31,21 @@ buttons.forEach(button => {
 equal.addEventListener('click', () => {
     let calcArray = calcLine.split("");
     calcArray.pop();
+    console.log(`longueur tableau: ${calcArray.length}`);
+    let result = parseInt(operate(opToFunction[`${calcArray[1]}`], parseInt(calcArray[0]), parseInt(calcArray[2])));
+
+    if (calcArray.length > 3) {
+        for (let i = 2; i < calcArray.length; i += 2) {
+            console.log(calcArray[i + 1]);
+            result += operate(opToFunction[`${calcArray[i + 1]}`], result, parseInt(calcArray[i + 2]));
+        }
+    };
+
+
     // console.log(operate(addFunction, parseInt(calcArray[0]), parseInt(calcArray[2])))
-    let result = operate(opToFunction[`${calcArray[1]}`], parseInt(calcArray[0]), parseInt(calcArray[2]));
+    // let result = operate(opToFunction[`${calcArray[1]}`], parseInt(calcArray[0]), parseInt(calcArray[2]));
     console.log(result);
-    display.innerText = Number(result);
+    display.innerText = result.toString();
 
 });
 
