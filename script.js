@@ -22,31 +22,39 @@ let calcLine = '';
 
 buttons.forEach(button => {
     button.addEventListener('click', e => {
-        display.innerText += e.target.innerText;
-        calcLine += e.target.innerText;
-        console.log(calcLine);
+        if (e.target.id != "equal") {
+            display.innerText += e.target.innerText;
+            calcLine += e.target.innerText;
+            console.log(calcLine);
+        }
     });
 });
 
 equal.addEventListener('click', () => {
-    let calcArray = calcLine.split("");
+
+    let numbers = calcLine.split(/[*]|[+]|[-]|[\/]/);
+    let operators = calcLine.split(/[^-|+|\/|\*]/).filter(e => e);
+
+    // console.log(numbers);
+    // console.log(operators);
+
+    let calcArray = numbers.map(
+        (element, index) => [element, operators[index]]
+    ).flat();
     calcArray.pop();
-    // console.log(`longueur tableau: ${calcArray.length}`);
+
+    // console.log(calcArray);
+
     let result = parseInt(operate(opToFunction[`${calcArray[1]}`], parseInt(calcArray[0]), parseInt(calcArray[2])));
-    console.log(result);
     if (calcArray.length > 3) {
-        for (let i = 2; i < calcArray.length - 2; i += 2) {
-            console.log(calcArray[i + 1]);
-            console.log(calcArray[i + 3]);
-            result += operate(opToFunction[`${calcArray[i + 1]}`], result, parseInt(calcArray[i + 2]));
+        for (let i = 3; i < calcArray.length; i += 2) {
+            result = operate(opToFunction[`${calcArray[i]}`], result, parseInt(calcArray[i + 1]));
         }
     };
 
-
-    // console.log(operate(addFunction, parseInt(calcArray[0]), parseInt(calcArray[2])))
-    // let result = operate(opToFunction[`${calcArray[1]}`], parseInt(calcArray[0]), parseInt(calcArray[2]));
     console.log(result);
     display.innerText = result.toString();
+    calcLine = result;
 
 });
 
