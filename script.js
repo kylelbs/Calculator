@@ -6,10 +6,10 @@ const multFunction = (a, b) => a * b;
 const divFunction = (a, b) => a / b;
 
 const opToFunction = {
-    "+": "addFunction",
-    "-": "subFunction",
-    "*": "multFunction",
-    "/": "divFunction",
+    "+": addFunction,
+    "-": subFunction,
+    "*": multFunction,
+    "/": divFunction,
 };
 
 let operate = (operator, a, b) => operator(a, b);
@@ -32,7 +32,7 @@ equal.addEventListener('click', () => {
     let calcArray = calcLine.split("");
     calcArray.pop();
     // console.log(operate(addFunction, parseInt(calcArray[0]), parseInt(calcArray[2])))
-    let result = operate(Function(opToFunction[`${calcArray[1]}`]), parseInt(calcArray[0]), parseInt(calcArray[2]));
+    let result = operate(opToFunction[`${calcArray[1]}`], parseInt(calcArray[0]), parseInt(calcArray[2]));
     console.log(result);
     display.innerText = Number(result);
 
