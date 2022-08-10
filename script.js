@@ -24,24 +24,32 @@ let calcLine = '';
 
 buttons.forEach(button => {
     button.addEventListener('click', e => {
+        if (e.target.id != "equal") {
+            display.innerText += e.target.innerText;
+            calcLine += e.target.innerText;
+            console.log(calcLine);
+        };
+
         for (let key in opToFunction) {
-            if (calcLine.slice(-1) === key || calcLine === '') {
+            // console.log("Here");
+            // console.log(calcLine.slice(-2));
+            if (calcLine[calcLine.length - 2] === key || calcLine === '') {
+                console.log("first if passed");
                 if (e.target.className == 'operator') {
                     console.log(calcLine);
                     console.log("Invalid");
                     calcLine = calcLine.slice(0, -1);
+                    calcLine = calcLine.slice(0, -1);
+                    display.innerText = display.innerText.slice(0, -1);
                     display.innerText = display.innerText.slice(0, -1);
                     console.log(calcLine)
                     break;
-                }
+                };
             }
-            if (e.target.id != "equal") {
-                display.innerText += e.target.innerText;
-                calcLine += e.target.innerText;
-                console.log(calcLine);
-                break;
-            }
-        }
+
+        };
+
+
     });
 });
 
@@ -52,15 +60,26 @@ equal.addEventListener('click', () => {
     // We check if the calc is possible with if statements
 
     for (let key in opToFunction) {
-        if (calcLine.slice(-1) == key) {
+        if (calcLine.charAt(0) == key) {
             console.log("You can't do that");
             isCalcPossible = false;
+            display.innerText = "Invalid calculation, click on CE";
+            break;
+        }
+    };
+
+    for (let key in opToFunction) {
+        if (calcLine.slice(0) == key) {
+            console.log("You can't do that");
+            isCalcPossible = false;
+            display.innerText = "Invalid calculation, click on CE";
             break;
         }
     };
 
     if (calcLine == '') {
         console.log("You can't do that");
+        display.innerText = "Invalid calculation, click on CE";
         isCalcPossible = false;
     }
 
