@@ -17,6 +17,7 @@ let operate = (operator, a, b) => operator(a, b);
 const buttons = document.querySelectorAll("button");
 const display = document.querySelector('#display');
 const equal = document.querySelector('#equal');
+const reset = document.querySelector("#reset");
 const operators = document.querySelectorAll('.operator');
 let calcLine = '';
 
@@ -24,17 +25,15 @@ let calcLine = '';
 buttons.forEach(button => {
     button.addEventListener('click', e => {
         for (let key in opToFunction) {
-            // console.log(key);
-            // console.log(calcLine.slice(-1));
-            if (
-                calcLine.slice(-1) == key &&
-                e.target.className == "operator") {
-                //truc a mettre l)
-                console.log(calcLine);
-                console.log("Invalid");
-                calcLine.slice(-1);
-                console.log(calcLine)
-                break;
+            if (calcLine.slice(-1) === key || calcLine === '') {
+                if (e.target.className == 'operator') {
+                    console.log(calcLine);
+                    console.log("Invalid");
+                    calcLine = calcLine.slice(0, -1);
+                    display.innerText = display.innerText.slice(0, -1);
+                    console.log(calcLine)
+                    break;
+                }
             }
             if (e.target.id != "equal") {
                 display.innerText += e.target.innerText;
@@ -50,6 +49,8 @@ equal.addEventListener('click', () => {
 
     let isCalcPossible = true;
 
+    // We check if the calc is possible with if statements
+
     for (let key in opToFunction) {
         if (calcLine.slice(-1) == key) {
             console.log("You can't do that");
@@ -57,6 +58,11 @@ equal.addEventListener('click', () => {
             break;
         }
     };
+
+    if (calcLine == '') {
+        console.log("You can't do that");
+        isCalcPossible = false;
+    }
 
     if (isCalcPossible == true) {
         let numbers = calcLine.split(/[*]|[+]|[-]|[\/]/);
@@ -85,5 +91,10 @@ equal.addEventListener('click', () => {
 
     };
 
+});
+
+reset.addEventListener('click', () => {
+    calcLine = '';
+    display.innerText = '';
 });
 
